@@ -1,35 +1,39 @@
 public class QuickSorter {
-
-    private int[]mas;
+    private final int[] mas;
 
     public QuickSorter(int[] mas) {
-        this.mas=mas;
+        this.mas = mas;
     }
 
-    public static int[] sort(int[] mas, int start, int end) {
+    int partition (int arr[], int left, int right)
+    {
+        int i = left, j = right;
+        int tmp;
+        int pivot = arr[(left + right) / 2];
 
-        if (start >= end) return mas;
-        int i = start;
-        int j = end;
-        int op = i - (i - j) / 2;
-
-
-        //quick sorting
-
-        while (i < j) {
-            while ((i < op) && (mas[i] <= mas[op])) i++;
-            while ((i > op) && (mas[i] >= mas[op])) i--;
-            if (i < j) {
-                int temp = mas[i];
-                mas[i] = mas[j];
-                mas[j] = temp;
-                if (i == op) op = i;
-
+        while (i <= j) {
+            while (arr[i] < pivot)
+                i++;
+            while (arr[j] > pivot)
+                j--;
+            if (i <= j) {
+                tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+                i++;
+                j--;
             }
         }
-        sort(mas, start, op);
-        sort(mas, op + 1, end);
-        return mas;
+        ;
+
+        return i;
+    }
+
+    void quickSort(int arr[], int left, int right) {
+        int index = partition(arr, left, right);
+        if (left < index - 1)
+            quickSort(arr, left, index - 1);
+        if (index < right)
+            quickSort(arr, index, right);
     }
 }
-
